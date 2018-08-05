@@ -1,0 +1,35 @@
+{
+  "name": "axios-router",
+  "version": "1.0.0",
+  "description": "make axios a router to config ",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "npm run build && npm test",
+    "test": "jest --config jest.config.js",
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guoshencheng/axios-router.git"
+  },
+  "keywords": [
+    "axios",
+    "router"
+  ],
+  "author": "guoshencheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guoshencheng/axios-router/issues"
+  },
+  "homepage": "https://github.com/guoshencheng/axios-router#readme",
+  "devDependencies": {
+    "@types/jest": "^23.3.1",
+    "ts-jest": "^23.1.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
