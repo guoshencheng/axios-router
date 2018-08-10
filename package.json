@@ -1,8 +1,8 @@
 {
   "name": "axios-router",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "make axios a router to config ",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "prepublish": "npm run build && npm test",
     "test": "jest --config jest.config.js",
