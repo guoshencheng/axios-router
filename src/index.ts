@@ -38,7 +38,7 @@ export const defaultBodyDataBuilder = (data: any, config: AxiosRouterConfig): an
 
 export interface AxiosRouterConfig extends AxiosRequestConfig {
   path?: string | ((data: any) => string);
-  method?: Method;
+  method?: string;
   dataBuilder?: DataBuilder;
   searchBuilder?: SearchBuilder;
 }
@@ -49,14 +49,21 @@ export interface AxiosRouterOptions {
   }
 }
 
-export type RequestSender = (value: any, config: AxiosRouterConfig) => AxiosPromise<any>
+export type RequestSender = (value?: any, config?: AxiosRouterConfig) => AxiosPromise<any>
 
-class AxiosRouter {
+export class Api {
+  [key: string]: RequestSender
+}
+
+export class AxiosRouter {
   static Sender: AxiosStatic = axios;
   static dataBuilder: DataBuilder = defaultBodyDataBuilder;
   static searchBuilder: SearchBuilder = defaultSearchBuilder;
 
+  api: Api
+
   constructor({ routers }: AxiosRouterOptions) {
+    this.api = new Api();
     this.$setRouters(routers);
   }
 
@@ -64,7 +71,7 @@ class AxiosRouter {
     [key: string]: AxiosRouterConfig
   }) {
     Object.keys(routers).forEach(key => {
-      Object.defineProperty(this, key, {
+      Object.defineProperty(this.api, key, {
         value: this.$sendRequest(routers[key]),
         writable: false,
       })
@@ -72,7 +79,8 @@ class AxiosRouter {
   }
 
   $sendRequest(config: AxiosRouterConfig): RequestSender {
-    return (value: any, c: AxiosRouterConfig): AxiosPromise => {
+    return (value?: any, c?: AxiosRouterConfig): AxiosPromise => {
+      c = c || {};
       const method = c.method || config.method || DEFAULT_METHOD;
       const dataBuilder = (c.dataBuilder || config.dataBuilder || AxiosRouter.dataBuilder)
       const searchBuilder = (c.searchBuilder || config.searchBuilder || AxiosRouter.searchBuilder)
