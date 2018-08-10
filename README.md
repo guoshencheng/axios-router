@@ -18,7 +18,7 @@ const axiosRouter = new AxiosRouter({
 })
 ```
 
-详见[test]('./__tests__/axios-router.ts')
+详见[test](./__tests__/axios-router.ts)
 
 ### Api
 
