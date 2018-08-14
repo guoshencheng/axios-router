@@ -1,5 +1,7 @@
-import axios, { AxiosStatic, AxiosRequestConfig, AxiosPromise } from 'axios';
+import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
 import { compile } from 'path-to-regexp';
+
+export { default as CreateQueueSender } from './sender/queue';
 
 export type Method =
   | 'get'
@@ -12,7 +14,7 @@ export type Method =
 
 const DEFAULT_METHOD = 'get';
 
-const isGetLike = (method) => ['get', 'delete', 'head', 'options'].indexOf(method.toLowerCase()) > -1;
+const isGetLike = (method: string) => ['get', 'delete', 'head', 'options'].indexOf(method.toLowerCase()) > -1;
 
 export type SearchBuilder = (data: any, config: AxiosRouterConfig) => any | undefined;
 
@@ -49,6 +51,10 @@ export interface AxiosRouterOptions {
   }
 }
 
+export interface AxiosSender {
+  (config: AxiosRequestConfig): AxiosPromise
+}
+
 export type RequestSender = (value?: any, config?: AxiosRouterConfig) => AxiosPromise<any>
 
 export class Api {
@@ -56,7 +62,7 @@ export class Api {
 }
 
 export class AxiosRouter {
-  static Sender: AxiosStatic = axios;
+  static Sender: AxiosSender = axios;
   static dataBuilder: DataBuilder = defaultBodyDataBuilder;
   static searchBuilder: SearchBuilder = defaultSearchBuilder;
 

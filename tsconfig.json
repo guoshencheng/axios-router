@@ -17,9 +17,9 @@
     "noUnusedParameters": false,
     "noImplicitThis": false,
     "traceResolution": false,
-    "lib": [ "es2016", "dom" ],
+    "lib": [ "es2015" ],
     "outDir": "./lib"
   },
   "exclude": [ "node_modules/", "lib/" ],
-  "include": [ "src/*.ts" ]
+  "include": [ "src/*.ts", "src/**/*.ts" ]
 }
