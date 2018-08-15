@@ -1,4 +1,4 @@
-import AxiosRouter from '../src';
+import AxiosRouter, { CreateQueueSender } from '../src';
 import * as pathToRegexp from 'path-to-regexp';
 import { compile } from 'path-to-regexp';
 import { closeServer, startServer } from '../server';
@@ -72,5 +72,22 @@ describe('测试 axios-router的基本功能', () => {
       expect(response.data.result.url).toMatch(pathToRegexp(routers.deleteUser.path));
       expect(response.data.result.method).toEqual('DELETE');
     })
+  })
+  it('测试 queue sender ', () => {
+    const sender = CreateQueueSender(1);
+    const exp = [];
+    const sort = [];
+    for(let i = 0; i < 3; i ++) {
+      exp.push(i);
+      const test = [...exp];
+      axiosRouter.api.deleteUser({ id: '22' }, {
+        sender,
+      }).then(response => {
+        expect(response.data.result.url).toMatch(pathToRegexp(routers.deleteUser.path));
+        expect(response.data.result.method).toEqual('DELETE');
+        sort.push(i);
+        expect(sort).toEqual(test);
+      })
+    }
   })
 })

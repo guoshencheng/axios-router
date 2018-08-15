@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
+import axios, { AxiosRequestConfig, AxiosPromise, AxiosInstance } from 'axios';
 import { compile } from 'path-to-regexp';
 
 export { default as CreateQueueSender } from './sender/queue';
@@ -43,6 +43,7 @@ export interface AxiosRouterConfig extends AxiosRequestConfig {
   method?: string;
   dataBuilder?: DataBuilder;
   searchBuilder?: SearchBuilder;
+  sender?: AxiosSender;
 }
 
 export interface AxiosRouterOptions {
@@ -62,7 +63,7 @@ export class Api {
 }
 
 export class AxiosRouter {
-  static Sender: AxiosSender = axios;
+  static Sender: AxiosInstance = axios;
   static dataBuilder: DataBuilder = defaultBodyDataBuilder;
   static searchBuilder: SearchBuilder = defaultSearchBuilder;
 

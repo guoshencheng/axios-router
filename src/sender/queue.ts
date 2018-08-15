@@ -1,6 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosInstance } from 'axios';
 import { EventEmitter } from 'fbemitter';
-import { AxiosSender } from '..';
 
 const FINISH_TASK = 'FINISH_TASK';
 const FINISH_TASK_ERROR = 'FINISH_TASK_ERROR';
@@ -65,11 +64,11 @@ class Queue extends EventEmitter {
 }
 
 // Sender
-export default (concurrent: number, Sender: AxiosSender) => {
+export default (concurrent: number, Sender?: AxiosInstance) => {
   Sender = Sender || axios;
   const queue = new Queue(concurrent);
   return (config: AxiosRequestConfig) => {
-    const { key } = queue.push(Sender, config);
+    const { key } = queue.push(Sender || axios, config);
     return new Promise((resolve, reject) => {
       const removeAll = () => {
         queue.removeAllListeners(`${FINISH_TASK}-${key}`);
