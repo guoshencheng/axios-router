@@ -1,6 +1,6 @@
 {
   "name": "axios-router",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "make axios a router to config ",
   "main": "lib/index.js",
   "scripts": {
